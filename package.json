@@ -4,13 +4,12 @@
   "description": "Task Highlights testing",
   "main": "index.ts",
   "scripts": {
-    "build": "rimraf ./build && tsc",
+    "build": "ts-node src",
     "dev": "nodemon",
     "start": "node build/index.js",
     "prett": "prettier -w .",
     "es": "eslint src --ignore-path .eslintignore",
-    "prod": "yarn prett && yarn es && yarn build && yarn start",
-    "final": "yarn prett && yarn es && yarn build"
+    "prod": "yarn prett && yarn es && yarn build"
   },
   "keywords": [],
   "author": "",

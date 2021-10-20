@@ -1,63 +1,7 @@
 import { fetch_delete_user } from "./fetchHelpers/user/DELETE";
 import { fetch_get_user } from "./fetchHelpers/user/GET";
 import { fetch_post_user } from "./fetchHelpers/user/POST";
-import { intended_user_get } from "./intended/user/get";
-import { isCuid } from "cuid";
-import { make_json_string } from "./helpers/validationHelpers";
-
-const is_user_valid = (check_user: object) => {
-  const user: any = check_user;
-
-  let is_valid = true;
-
-  if (
-    make_json_string(Object.keys(user)) !==
-    make_json_string(Object.keys(intended_user_get))
-  ) {
-    is_valid = false;
-  }
-
-  Object.keys(user).map((key) => {
-    if (is_valid) {
-      if (key === "user_datecreated") {
-        const date = new Date(user[key]);
-
-        if (!date) {
-          is_valid = false;
-          console.log("first date check");
-        }
-      } else if (key === "user_lastseen") {
-        const date = new Date(user[key]);
-
-        if (!date) {
-          is_valid = false;
-          console.log("first date check");
-        }
-      } else if (key === "user_streak_last_updated") {
-        const date = new Date(user[key]);
-
-        if (!date) {
-          is_valid = false;
-          console.log("first date check");
-        }
-      } else if (key === "user_api_token") {
-        if (!isCuid(user[key])) {
-          is_valid = false;
-        }
-      } else {
-        // eslint-disable-next-line no-lonely-if
-        if (
-          make_json_string(user[key]) !==
-          make_json_string(intended_user_get[key])
-        ) {
-          is_valid = false;
-        }
-      }
-    }
-  });
-
-  return is_valid;
-};
+import { is_user_valid } from "./helpers/users/user_validator";
 
 (async () => {
   let posted_user = null;
@@ -93,7 +37,7 @@ const is_user_valid = (check_user: object) => {
 
   if (deleted_user) {
     console.log("Deleted");
-    console.log(deleted_user);
+    console.log(deleted_user.data);
   } else {
     console.log(deleted_user);
   }
